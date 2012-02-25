@@ -7,7 +7,7 @@ maxThreads = 5
 
 def runCommand(parameter):
     """Gets jobs to be run from the Jobs Folder and adds them
-    to the jobs list
+    to the jobs list.
     """
     #moduleList = os.listdir(os.getcwd() + "/modules/")
     for root, moduleNames, fileNames in os.walk('./modules/'):
