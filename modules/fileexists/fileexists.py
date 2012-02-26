@@ -10,7 +10,12 @@ import threading
 class moduleMain( threading.Thread ):
     
     def run( self, parameter=None ):
-        #Get first argument
+        """
+        fileexists module
+
+	pass in a file name and path as the first paramater
+	The module returns true if the file exists and false if it does not
+        """
         self.argument = sys.argv[1]
         if os.path.exists(parameter):
             return {'status': True, 'message': "The file exists"}
