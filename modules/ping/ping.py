@@ -7,7 +7,7 @@ class moduleMain( threading.Thread ):
 	"""
 	ping module
 	accepts hostname or IP address as first paramater.
-	Module will ping host and return true if a response is returned or false if no response
+	Module will ping host and return true if a response is returned or false if no response.
 	"""
         
         
