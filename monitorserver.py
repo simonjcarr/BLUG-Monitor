@@ -10,7 +10,7 @@ def parsejobs():
             #import each module in the module directory
             exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")
             #run the moduleMain function in each module.
-             #moduleMain always returns a list object with the following keys
+            #moduleMain always returns a list object with the following keys
             # - status (boolean True or False)
             # - message (string a short message that describes the result)
             result = runModule.moduleMain()
