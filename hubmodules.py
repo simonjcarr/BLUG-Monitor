@@ -1,7 +1,8 @@
+#!/usr/bin/env python
 #Written by Simon Carr
 #4 March 2012
 from optparse import OptionParser
-import sys, os
+import sys, os, shutil, tarfile
 
 
 
@@ -18,11 +19,30 @@ class ManageModules:
             return moduleList
             
             
-    def unInstallModule(self):
-        pass
+    def unInstallModule(self,moduleName):
+        if os.path.isdir(os.path.join("./modules",moduleName)):
+            response = raw_input("Are you sure you want to uninstall module " + moduleName + "(y/n)")
+            if response == "y":
+                shutil.rmtree(os.path.join("./modules",moduleName), False)
+                print "Module " + moduleName + " uninstalled."
+            else:
+                print "Uninstall canceled."
+        else:
+            print "Can not uninstall module that is not installed"
     
-    def installModule(self):
-        pass
+    def installModule(self,archivePath):
+        #shutil.copy(archivePath,"./modules")
+        tar = tarfile.open(archivePath,"r:gz")
+        tar.extractall("./modules")
+        moduleName = os.path.basename(archivePath)[:-7]
+        if not self.moduleExists(moduleName):
+            print "Module install failed."
+        else:
+            print "module was installed."
+            self.moduleDetail(moduleName, printList=True)
+        
+        
+        
     
     def moduleDetail(self,moduleName=None,printList=True):
         moduleConfig = []
@@ -32,6 +52,8 @@ class ManageModules:
                 moduleConfig.append(config.read())
                 config.close()
         else:
+            if not self.moduleExists(moduleName):
+                return False
             config = open(os.path.join("./modules/",moduleName,moduleName + ".config"))
             moduleConfig.append(config.read())
             config.close()
@@ -42,7 +64,13 @@ class ManageModules:
                 
         else:
             return moduleConfig
-            
+        
+    def moduleExists(self,moduleName):
+        if not os.path.isdir(os.path.join("./modules",moduleName)):
+            return False
+        else:
+            return True
+             
     
 if __name__ == "__main__":
     mm = ManageModules()
@@ -60,3 +88,6 @@ if __name__ == "__main__":
             mm.moduleDetail()
         else:
             mm.moduleDetail(options.details_moduleName,True)
+    if options.uninstall_moduleName: mm.unInstallModule(options.uninstall_moduleName)
+    if options.install_moduleName: mm.installModule(options.install_moduleName)
+    
