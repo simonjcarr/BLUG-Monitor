@@ -31,7 +31,6 @@ class ManageModules:
             print "Can not uninstall module that is not installed"
     
     def installModule(self,archivePath):
-        #shutil.copy(archivePath,"./modules")
         tar = tarfile.open(archivePath,"r:gz")
         tar.extractall("./modules")
         moduleName = os.path.basename(archivePath)[:-7]
