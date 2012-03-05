@@ -3,10 +3,11 @@
 #4 March 2012
 from optparse import OptionParser
 import sys, os, shutil, tarfile
+import uuid
 
 
 
-class ManageModules:
+class ManageModules(object):
     def __init__(self):
         pass
     
@@ -69,6 +70,24 @@ class ManageModules:
             return False
         else:
             return True
+
+    def importModule(self,moduleName):
+	exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")
+	return runModule
+
+    
+
+    def createTask(self,moduleName,command):
+	runModule = self.importModule(moduleName)	
+	#exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")	
+	self.importModule(moduleName)
+	taskCreator = runModule.createTask()
+	task = getattr(taskCreator,command)()
+	uniqueID = uuid.uuid4()
+	print "Task with id " + str(uniqueID) + " has been created: " + task[0] + " to be run every " + task[1] + " seconds"
+
+	
+	
              
     
 if __name__ == "__main__":
@@ -79,6 +98,8 @@ if __name__ == "__main__":
     parser.add_option("-i","--install",dest="install_moduleName",help="Installs a new module. By default the script will check GitHub for latest version of the module and download. To specify a gz archive use -a or --archive and give path to archive.")
     parser.add_option("-a","--archive",dest="archivePath",help="Use in conjunction with -i to specify the location of an archive file to install")
     parser.add_option("-d","--detail",dest="details_moduleName",default=None,help="Print details of specified module. If 'ALL' specified detail is printed for all installed modules")
+    parser.add_option("-t","--task",dest="task_moduleName",default=None,help="Runs the task creator for the given module and command. you must also provide -c <command>. To get a list of options run hubmodules.py -d <modulename>")
+    parser.add_option("-c","--command",dest="task_Command",default=None,help="Runs the module task generator for the specific command you want to run the given module")
     (options, args) = parser.parse_args()
     
     if options.listModules == True: mm.listModules()
@@ -89,4 +110,4 @@ if __name__ == "__main__":
             mm.moduleDetail(options.details_moduleName,True)
     if options.uninstall_moduleName: mm.unInstallModule(options.uninstall_moduleName)
     if options.install_moduleName: mm.installModule(options.install_moduleName)
-    
+    if options.task_moduleName: mm.createTask(options.task_moduleName, options.task_Command)
