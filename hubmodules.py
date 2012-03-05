@@ -70,24 +70,24 @@ class ManageModules(object):
             return False
         else:
             return True
-
     def importModule(self,moduleName):
-	exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")
-	return runModule
+        runModule = None
+        exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")
+        return runModule
 
     
 
     def createTask(self,moduleName,command):
-	runModule = self.importModule(moduleName)	
-	#exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")	
-	self.importModule(moduleName)
-	taskCreator = runModule.createTask()
-	task = getattr(taskCreator,command)()
-	uniqueID = uuid.uuid4()
-	print "Task with id " + str(uniqueID) + " has been created: " + task[0] + " to be run every " + task[1] + " seconds"
+        runModule = self.importModule(moduleName)	
+        #exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")	
+        self.importModule(moduleName)
+        taskCreator = runModule.createTask()
+        task = getattr(taskCreator,command)()
+        uniqueID = uuid.uuid4()
+        print "Task with id " + str(uniqueID) + " has been created: " + task[0] + " to be run every " + task[1] + " seconds"
+    
+    
 
-	
-	
              
     
 if __name__ == "__main__":

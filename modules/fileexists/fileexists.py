@@ -23,7 +23,7 @@ class moduleMain( threading.Thread ):
             return {'status': False, 'message': "The file does not exist"}
 
     def runFileSize(self, minSize=None, maxSize=None):
-	pass
+        pass
 
 class createTask(object):
     filePath = ""
@@ -31,30 +31,30 @@ class createTask(object):
     maxSize = 0
     frequency = 0
     def fileExist(self):
-	self.getFilePath()
-	self.getFrequency()
-	return ["FileExist('" + self.filePath + "')",self.frequency]
+        self.getFilePath()
+        self.getFrequency()
+        return ["FileExist('" + self.filePath + "')",self.frequency]
 
     def minSize(self):
-	self.getMinSize()
+        self.getMinSize()
         self.getFilePath()
-	self.getFrequency()
-	return ["minSize('" + self.filePath + "', " + self.minSize + ")",self.frequency]
+        self.getFrequency()
+        return ["minSize('" + self.filePath + "', " + self.minSize + ")",self.frequency]
 
     def maxSize(self):
-	self.getMaxSize()
+        self.getMaxSize()
         self.getFilePath()
-	self.getFrequency()
-	return ["maxSize('" + self.filePath + "', " + self.maxSize + ")",self.frequency]
+        self.getFrequency()
+        return ["maxSize('" + self.filePath + "', " + self.maxSize + ")",self.frequency]
+        
+    def getNotificationOptions(self):
+        #ToDo: Use this function to get the list of available notification methods.
+        #Present the user with the option to choose one as part of creating the task.	
+        pass
 
-    def getNotificationOptions():
-	#ToDo: Use this function to get the list of available notification methods.
-	#Present the user with the option to choose one as part of creating the task.	
-	pass
-   
 
     def getFilePath(self):
-	self.filePath = raw_input("Enter full path of file to monitor (not a relative path): ")
+        self.filePath = raw_input("Enter full path of file to monitor (not a relative path): ")
 
     def getMinSize(self):
         self.minSize = raw_input("Enter min size of file (end with b, k, m, g) to trigger alarm: ")
@@ -63,4 +63,4 @@ class createTask(object):
         self.maxSize = raw_input("Enter max size of file (end with b, k, m, g) to trigger alarm: ")
 
     def getFrequency(self):
-	self.frequency = raw_input("Enter frequency (seconds) to run this task: ")
+        self.frequency = raw_input("Enter frequency (seconds) to run this task: ")
