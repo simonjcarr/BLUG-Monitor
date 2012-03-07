@@ -3,7 +3,7 @@
 #4 March 2012
 from optparse import OptionParser
 import sys, os, shutil, tarfile
-import uuid
+import uuid,csv
 
 
 
@@ -79,17 +79,23 @@ class ManageModules(object):
 
     def createTask(self,moduleName,command):
         runModule = self.importModule(moduleName)	
-        #exec("import " + "modules." + moduleName + "." + moduleName + " as runModule")	
         self.importModule(moduleName)
         taskCreator = runModule.createTask()
         task = getattr(taskCreator,command)()
+        buildTask = []
         uniqueID = uuid.uuid4()
         print "Task with id " + str(uniqueID) + " has been created: " + task[0] + " to be run every " + task[1] + " seconds"
-    
+        buildTask.append(str(uniqueID))
+        buildTask.append(moduleName)
+        buildTask.append(task[1])
+        buildTask.append(task[0])
+        
+        
+        
     
 
              
-    
+
 if __name__ == "__main__":
     mm = ManageModules()
     parser = OptionParser()
