@@ -1,0 +1,42 @@
+The following is the layout of the job csv list
+
+
+jobid, module, schedule, run cycle, parameter
+
+jobid
+-----
+Data Type - Integer
+Description - Unique identifier for this job.
+Todo: This should really be a string and be auto generated to form a guranteg unique value
+
+module
+------
+Data Type - String
+Description - This is simply the name of the module. This must be exactly the same 
+as the installed module name. This name will be used to import the module before
+running the moduleMain() class
+
+
+schedule
+--------
+Data Type - Integer
+Description - This is the minimum number of seconds before this command should be run each
+subsequent time.
+
+run cylce
+---------
+Data Type - String
+Description - Some modules may load them selves as daemons.In this case we only want to run
+the command once,then monitor it's output. For the time being development will be done
+with simple commands. This will enable the application to make use of daemon scripts in the 
+future.
+Usage 	- cmd = run as a normal command
+		- daemon = run as a deamon - once run do not run again (Not yet supported) 
+		
+parameter
+---------
+Data Type - String
+Description - This is the list of parmeters to be passed to the module when it is run.
+Multiple parameters should be seperated by pipes (|).
+
+  
